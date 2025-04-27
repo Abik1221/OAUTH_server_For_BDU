@@ -1,4 +1,4 @@
-FROM golang:1.20-alpine as builder
+FROM golang:1.21-alpine3.18 as builder
 
 WORKDIR /app
 COPY go.mod go.sum ./
@@ -6,8 +6,7 @@ RUN go mod download
 COPY . .
 RUN go build -o authorization_service .
 
-FROM alpine:latest
+FROM scratch
 
-copy FROM builder /app/authorization_service 
-WORKDIR /app
-CMD ["./authorization_service"]
+COPY --from=builder /app/authorization_service /app/authorization_service 
+ENTRYPOINT [ "/app/authorization_service" ]

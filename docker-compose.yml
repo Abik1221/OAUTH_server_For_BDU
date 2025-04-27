@@ -1,0 +1,15 @@
+version: "3.8"
+services:
+  authorization_db:
+    image: postgres:latest
+    container_name: auth_db
+    environment:
+      POSTGRES_USER: auth_user
+      POSTGRES_PASSWORD: auth_pass
+      POSTGRES_DB: auth_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - auth_db_data:/var/lib/postgresql/data
+volumes:
+  auth_db_data:
